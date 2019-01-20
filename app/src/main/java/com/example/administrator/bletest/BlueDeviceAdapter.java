@@ -25,13 +25,30 @@ public class BlueDeviceAdapter extends RecyclerView.Adapter<BlueDeviceViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BlueDeviceViewHolder blueDeviceViewHolder, int i) {
+    public void onBindViewHolder(@NonNull BlueDeviceViewHolder blueDeviceViewHolder,final int i) {
         blueDeviceViewHolder.mTvMac.setText(mData.get(i).getAddress());
         blueDeviceViewHolder.mTvName.setText(mData.get(i).getName());
+        blueDeviceViewHolder.mLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCallBack!=null){
+                    mCallBack.onItem(i);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    interface ItemCallBack{
+        void onItem(int pos);
+    }
+    private ItemCallBack mCallBack;
+
+    public void setCallBack(ItemCallBack mCallBack) {
+        this.mCallBack = mCallBack;
     }
 }
